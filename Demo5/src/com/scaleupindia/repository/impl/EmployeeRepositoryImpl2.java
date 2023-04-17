@@ -22,18 +22,6 @@ public class EmployeeRepositoryImpl2 implements EmployeeRepository {
 	}
 
 	@Override
-	public void displayEmployees() {
-		for (Employee employee : employeeList) {
-			System.out.println(employee);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	@Override
 	public List<Employee> fetchEmployees() {
 		List<Employee> employeeList2 = new ArrayList<>();
 		for (Employee employee : employeeList) {

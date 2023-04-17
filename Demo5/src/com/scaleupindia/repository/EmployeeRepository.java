@@ -10,8 +10,6 @@ import com.scaleupindia.entity.Employee;
  */
 public interface EmployeeRepository {
 
-	void displayEmployees();
-
 	List<Employee> fetchEmployees();
 
 }

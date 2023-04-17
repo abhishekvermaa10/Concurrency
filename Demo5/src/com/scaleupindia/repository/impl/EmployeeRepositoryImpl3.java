@@ -20,18 +20,6 @@ public class EmployeeRepositoryImpl3 implements EmployeeRepository {
 		employeeList.add(new Employee(304, "Ajita"));
 		employeeList.add(new Employee(305, "Deepa"));
 	}
-
-	@Override
-	public void displayEmployees() {
-		for (Employee employee : employeeList) {
-			System.out.println(employee);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 	
 	@Override
 	public List<Employee> fetchEmployees() {

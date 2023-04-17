@@ -22,15 +22,17 @@ public class EmployeeRepositoryImpl2 implements EmployeeRepository {
 	}
 
 	@Override
-	public void displayEmployees() {
+	public List<Employee> fetchEmployees() {
+		List<Employee> employeeList2 = new ArrayList<>();
 		for (Employee employee : employeeList) {
-			System.out.println(employee);
+			employeeList2.add(employee);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		return employeeList2;
 	}
 
 	@Override

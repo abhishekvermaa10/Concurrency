@@ -37,6 +37,7 @@ public class Demo {
 		executorService.shutdown();
 		while (!executorService.isTerminated()) {
 			if (executorService.isTerminated()) {
+				System.out.println("Size of futureList is " + futureList.size());
 				futureList.stream().map(future -> {
 					try {
 						return future.get();
