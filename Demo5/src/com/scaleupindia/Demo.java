@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import com.scaleupindia.entity.Employee;
 import com.scaleupindia.repository.EmployeeRepository;
@@ -35,19 +36,20 @@ public class Demo {
 		}
 
 		executorService.shutdown();
-		while (!executorService.isTerminated()) {
-			if (executorService.isTerminated()) {
-				System.out.println("Size of futureList is " + futureList.size());
-				futureList.stream().map(future -> {
-					try {
-						return future.get();
-					} catch (InterruptedException | ExecutionException e) {
-						throw new RuntimeException(e);
-					}
-				}).flatMap(List::stream).forEach(System.out::println);
-				System.out.println("Completed in " + (System.currentTimeMillis() - startTime) + " milliseconds");
-				System.out.println(Thread.currentThread().getName() + " finished fetching");
-			}
+		try {
+			executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+		System.out.println("Size of futureList is " + futureList.size());
+		futureList.stream().map(future -> {
+			try {
+				return future.get();
+			} catch (InterruptedException | ExecutionException e) {
+				throw new RuntimeException(e);
+			}
+		}).flatMap(List::stream).forEach(System.out::println);
+		System.out.println("Completed in " + (System.currentTimeMillis() - startTime) + " milliseconds");
+		System.out.println(Thread.currentThread().getName() + " finished fetching");
 	}
 }

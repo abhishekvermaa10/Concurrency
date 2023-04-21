@@ -2,6 +2,7 @@ package com.scaleupindia;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import com.scaleupindia.repository.EmployeeRepository;
 import com.scaleupindia.repository.impl.EmployeeRepositoryImpl1;
@@ -28,11 +29,12 @@ public class Demo {
 		}
 
 		executorService.shutdown();
-		while (!executorService.isTerminated()) {
-			if (executorService.isTerminated()) {
-				System.out.println("Completed in " + (System.currentTimeMillis() - startTime) + " milliseconds");
-				System.out.println(Thread.currentThread().getName() + " finished fetching");
-			}
+		try {
+			executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+		System.out.println("Completed in " + (System.currentTimeMillis() - startTime) + " milliseconds");
+		System.out.println(Thread.currentThread().getName() + " finished fetching");
 	}
 }

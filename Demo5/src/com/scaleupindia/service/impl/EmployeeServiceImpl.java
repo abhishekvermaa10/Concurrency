@@ -19,9 +19,8 @@ public class EmployeeServiceImpl implements Callable<List<Employee>> {
 	}
 
 	public List<Employee> call() {
-		List<Employee> employeeList;
 		System.out.println(Thread.currentThread().getName() + " started fetching from : " + employeeRepository);
-		employeeList = employeeRepository.fetchEmployees();
+		List<Employee> employeeList = employeeRepository.fetchEmployees();
 		System.out.println(Thread.currentThread().getName() + " finished fetching from : " + employeeRepository);
 		return employeeList;
 	}

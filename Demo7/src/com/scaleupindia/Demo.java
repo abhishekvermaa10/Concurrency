@@ -1,10 +1,7 @@
 package com.scaleupindia;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.scaleupindia.repository.EmployeeRepository;
@@ -25,12 +22,10 @@ public class Demo {
 				new EmployeeRepositoryImpl3() };
 
 		long startTime = System.currentTimeMillis();
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		List<Future<?>> futureList = new ArrayList<>();
+		ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
 		for (int i = 0; i < employeeRepositories.length; i++) {
 			employeeServiceImpl = new EmployeeServiceImpl(employeeRepositories[i]);
-			Future<?> future = executorService.submit(employeeServiceImpl);
-			futureList.add(future);
+			executorService.schedule(employeeServiceImpl, 5, TimeUnit.SECONDS);
 		}
 
 		executorService.shutdown();
@@ -38,14 +33,6 @@ public class Demo {
 			executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
-		System.out.println("Size of futureList is " + futureList.size());
-		for (Future<?> future : futureList) {
-			try {
-				System.out.println(future.get());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 		System.out.println("Completed in " + (System.currentTimeMillis() - startTime) + " milliseconds");
 		System.out.println(Thread.currentThread().getName() + " finished fetching");

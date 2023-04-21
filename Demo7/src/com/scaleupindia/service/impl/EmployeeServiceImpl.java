@@ -1,8 +1,7 @@
 package com.scaleupindia.service.impl;
 
-import java.util.List;
+import java.time.LocalTime;
 
-import com.scaleupindia.entity.Employee;
 import com.scaleupindia.repository.EmployeeRepository;
 
 /**
@@ -18,8 +17,8 @@ public class EmployeeServiceImpl implements Runnable {
 	}
 
 	public void run() {
-		System.out.println(Thread.currentThread().getName() + " started fetching from : " + employeeRepository);
-		List<Employee> employeeList = employeeRepository.fetchEmployees();
-		System.out.println(Thread.currentThread().getName() + " finished fetching from : " + employeeRepository);
+		System.out.println(Thread.currentThread().getName() + " started fetching from : " + employeeRepository + " at " + LocalTime.now());
+		employeeRepository.displayEmployees();
+		System.out.println(Thread.currentThread().getName() + " finished fetching from : " + employeeRepository + " at " + LocalTime.now());
 	}
 }
