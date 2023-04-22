@@ -25,7 +25,7 @@ public class Demo2 {
 		ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
 		for (int i = 0; i < employeeRepositories.length; i++) {
 			employeeServiceImpl = new EmployeeServiceImpl(employeeRepositories[i]);
-			executorService.scheduleAtFixedRate(employeeServiceImpl, 5, 10, TimeUnit.SECONDS);
+			executorService.scheduleAtFixedRate(employeeServiceImpl, 5, 1, TimeUnit.SECONDS);
 		}
 
 		try {

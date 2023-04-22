@@ -1,5 +1,6 @@
 package com.scaleupindia;
 
+import java.time.LocalTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +17,7 @@ import com.scaleupindia.service.impl.EmployeeServiceImpl;
  */
 public class Demo {
 	public static void main(String[] args) {
-		System.out.println(Thread.currentThread().getName() + " started fetching");
+		System.out.println(Thread.currentThread().getName() + " started fetching" + " at " + LocalTime.now());
 		EmployeeServiceImpl employeeServiceImpl = null;
 		EmployeeRepository[] employeeRepositories = { new EmployeeRepositoryImpl1(), new EmployeeRepositoryImpl2(),
 				new EmployeeRepositoryImpl3() };
@@ -25,7 +26,7 @@ public class Demo {
 		ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
 		for (int i = 0; i < employeeRepositories.length; i++) {
 			employeeServiceImpl = new EmployeeServiceImpl(employeeRepositories[i]);
-			executorService.schedule(employeeServiceImpl, 5, TimeUnit.SECONDS);
+			executorService.schedule(employeeServiceImpl, 10, TimeUnit.SECONDS);
 		}
 
 		executorService.shutdown();
@@ -35,6 +36,6 @@ public class Demo {
 			e.printStackTrace();
 		}
 		System.out.println("Completed in " + (System.currentTimeMillis() - startTime) + " milliseconds");
-		System.out.println(Thread.currentThread().getName() + " finished fetching");
+		System.out.println(Thread.currentThread().getName() + " finished fetching" + " at " + LocalTime.now());
 	}
 }

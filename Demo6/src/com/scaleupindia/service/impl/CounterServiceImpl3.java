@@ -25,7 +25,7 @@ public class CounterServiceImpl3 implements CounterService {
 	@Override
 	public void incrementCount() {
 		lock.lock();
-		++count;
+		++count; // count = count + 1
 		lock.unlock();
 	}
 }
